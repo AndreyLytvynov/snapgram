@@ -1,11 +1,21 @@
 import { Routes, Route } from "react-router-dom";
 
-import Signinform from "./_auth/forms/Signinform";
-import Signupform from "./_auth/forms/Signupform";
-import { Home } from "./_root/pages";
-import "./global.css";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
+import Signinform from "./_auth/forms/Signinform";
+import Signupform from "./_auth/forms/Signupform";
+import {
+  AllUsers,
+  CreatePost,
+  EditPost,
+  Explore,
+  Home,
+  PostDetails,
+  Profile,
+  Saved,
+  UpdateProfile,
+} from "./_root/pages";
+import "./global.css";
 
 import { Toaster } from "@/components/ui/toaster";
 
