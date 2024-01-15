@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { useDropzone, FileWithPath } from "react-dropzone";
+
 import { Button } from "../ui/button";
 
 type FileUploaderProps = {
@@ -9,7 +10,7 @@ type FileUploaderProps = {
 
 const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
   const [file, setFile] = useState<File[]>([]);
-  const [fileUrl, setFileUrl] = useState("");
+  const [fileUrl, setFileUrl] = useState<string>(mediaUrl);
 
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
