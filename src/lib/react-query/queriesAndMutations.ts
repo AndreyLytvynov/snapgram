@@ -1,4 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+
 import {
   SignInAccount,
   SignOutAccount,
@@ -7,15 +13,19 @@ import {
   deletePost,
   deleteSavedPost,
   getCurrentUser,
+  getInfinitePosts,
   getPostById,
   getRecentPosts,
   getUserPosts,
   likePost,
   savePost,
+  searchPosts,
   updatePost,
 } from "../appwrite/api";
-import { INewPost, INewUser, IUpdatePost } from "@/types";
+
 import { QUERY_KEYS } from "./queryKeys";
+import { INewPost, INewUser, IUpdatePost } from "@/types";
+import { Models } from "appwrite";
 
 //Account
 export const useCreateUserAccount = () => {
@@ -35,7 +45,45 @@ export const useSignOutAccount = () => {
   });
 };
 
+//User
+export const useGetCurrentUser = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+    queryFn: getCurrentUser,
+  });
+};
+
 //Posts
+
+export const useGetPosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: getInfinitePosts,
+    getNextPageParam: (
+      lastPage: Models.DocumentList<Models.Document> | undefined
+    ) => {
+      // If there's no data or documents array is empty, there are no more pages.
+      if (!lastPage || lastPage.documents.length === 0) {
+        return null;
+      }
+
+      // Use the $id of the last document as the cursor.
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+
+      return lastId;
+    },
+    initialPageParam: null,
+  });
+};
+
+export const useSearchPosts = (searchTerm: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
+    queryFn: () => searchPosts(searchTerm),
+    enabled: !!searchTerm,
+  });
+};
+
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -151,18 +199,11 @@ export const useDeletePost = () => {
     },
   });
 };
+
 export const useGetUserPosts = (userId?: string) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_USER_POSTS, userId],
     queryFn: () => getUserPosts(userId),
     enabled: !!userId,
-  });
-};
-
-//User
-export const useGetCurrentUser = () => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
-    queryFn: getCurrentUser,
   });
 };

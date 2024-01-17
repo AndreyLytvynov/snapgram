@@ -3,6 +3,7 @@ import { account, appwriteConfig, avatars, databases, storage } from "./config";
 
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 
+// Users
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(
@@ -89,6 +90,7 @@ export async function SignOutAccount() {
   }
 }
 
+//Posts
 export async function createPost(post: INewPost) {
   try {
     // Upload file to appwrite storage
@@ -356,6 +358,49 @@ export async function getUserPosts(userId?: string) {
     if (!post) throw Error;
 
     return post;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getInfinitePosts({
+  pageParam,
+}: {
+  pageParam: string | null;
+}) {
+  const queries = [Query.orderDesc("$updatedAt"), Query.limit(9)];
+
+  if (pageParam) {
+    queries.push(Query.cursorAfter(pageParam.toString()));
+  }
+
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      queries
+    );
+
+    if (!posts) throw Error;
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+    throw error; // Rethrow the error so that it's propagated to the query
+  }
+}
+
+export async function searchPosts(searchTerm: string) {
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      [Query.search("caption", searchTerm)]
+    );
+
+    if (!posts) throw Error;
+
+    return posts;
   } catch (error) {
     console.log(error);
   }
