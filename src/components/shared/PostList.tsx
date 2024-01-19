@@ -1,7 +1,8 @@
 import { Models } from "appwrite";
 import { Link } from "react-router-dom";
 
-import { useUserContext } from "@/context/AuthContext";
+import { useUserContext } from "@/context/userContext";
+
 import PostStats from "./PostStats";
 
 type GridPostListProps = {
@@ -25,7 +26,7 @@ const PostList = ({
             <img
               src={post.imageUrl}
               alt='post'
-              className='h-full w-full object-cover'
+              className='h-full w-full object-contain'
             />
           </Link>
 

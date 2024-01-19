@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
-import { useUserContext } from "@/context/AuthContext";
+import { useUserContext } from "@/context/userContext";
+
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 
 import { sidebarLinks } from "@/constants";

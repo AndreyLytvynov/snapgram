@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { useUserContext } from "@/context/AuthContext";
 import { PostValidation } from "@/lib/validation";
 import {
   useCreatePost,
@@ -25,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import FileUploader from "../shared/FileUploader";
 import Loader from "../shared/Loader";
+import { useUserContext } from "@/context/userContext";
 
 type PostFormProps = {
   post?: Models.Document;

@@ -6,7 +6,7 @@ import {
   useCreateUserAccount,
   useSignInAccount,
 } from "@/lib/react-query/queriesAndMutations";
-import { useUserContext } from "@/context/AuthContext";
+import { useUserContext } from "@/context/userContext";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
