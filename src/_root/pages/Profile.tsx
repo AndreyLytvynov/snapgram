@@ -1,20 +1,24 @@
 import { Link, useParams } from "react-router-dom";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  // useFollow,
+  useGetUserById,
+} from "@/lib/react-query/queriesAndMutations";
+import { useUserContext } from "@/context/userContext";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Loader from "@/components/shared/Loader";
 import { Button } from "@/components/ui/button";
 import PostList from "@/components/shared/PostList";
 import LikedPosts from "./LikedPosts";
-import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
 import StatBlock from "@/components/shared/StatBlock";
-import { useUserContext } from "@/context/userContext";
 
 const Profile = () => {
   const { id } = useParams();
   const { user } = useUserContext();
 
   const { data: currentUser } = useGetUserById(id || "");
+  // const { mutate: follows } = useFollow();
 
   if (!currentUser)
     return (
@@ -22,6 +26,11 @@ const Profile = () => {
         <Loader />
       </div>
     );
+
+  const handleFollow = () => {
+    console.dir("follows");
+    // follows({ currentUserId: user.id, followUserId: currentUser.$id });
+  };
 
   return (
     <div className='profile-container'>
@@ -32,7 +41,9 @@ const Profile = () => {
               currentUser.imageUrl || "/assets/icons/profile-placeholder.svg"
             }
             alt='profile'
-            className='w-28 h-28 lg:h-36 lg:w-36 rounded-full'
+            width={200}
+            height={200}
+            className='object-cover rounded-full'
           />
           <div className='flex flex-col flex-1 justify-between md:mt-2'>
             <div className='flex flex-col w-full'>
@@ -75,7 +86,11 @@ const Profile = () => {
               </Link>
             </div>
             <div className={`${user.id === id && "hidden"}`}>
-              <Button type='button' className='shad-button_primary px-8'>
+              <Button
+                type='button'
+                className='shad-button_primary px-8'
+                onClick={handleFollow}
+              >
                 Follow
               </Button>
             </div>

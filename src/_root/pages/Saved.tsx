@@ -1,7 +1,8 @@
+import { Models } from "appwrite";
+import { useGetCurrentUser } from "@/lib/react-query/queriesAndMutations";
+
 import Loader from "@/components/shared/Loader";
 import PostList from "@/components/shared/PostList";
-import { useGetCurrentUser } from "@/lib/react-query/queriesAndMutations";
-import { Models } from "appwrite";
 
 const Saved = () => {
   const { data: currentUser } = useGetCurrentUser();

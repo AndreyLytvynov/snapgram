@@ -7,6 +7,11 @@ export type IContextType = {
   checkAuthUser: () => Promise<boolean>;
 };
 
+export type IThemeContextType = {
+  isDarkTheme: boolean;
+  setIsDarkTheme: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 export type INavLink = {
   imgURL: string;
   route: string;

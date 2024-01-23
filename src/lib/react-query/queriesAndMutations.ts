@@ -12,6 +12,7 @@ import {
   createUserAccount,
   deletePost,
   deleteSavedPost,
+  follow,
   getCurrentUser,
   getInfinitePosts,
   getPostById,
@@ -238,6 +239,9 @@ export const useDeletePost = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_USER_BY_ID],
+      });
     },
   });
 };
@@ -247,5 +251,25 @@ export const useGetUserPosts = (userId?: string) => {
     queryKey: [QUERY_KEYS.GET_USER_POSTS, userId],
     queryFn: () => getUserPosts(userId),
     enabled: !!userId,
+  });
+};
+
+//Follows
+
+export const useFollow = () => {
+  // const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      currentUserId,
+      followUserId,
+    }: {
+      currentUserId: string;
+      followUserId: string;
+    }) => follow(currentUserId, followUserId),
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({
+    //     queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+    //   });
+    // },
   });
 };

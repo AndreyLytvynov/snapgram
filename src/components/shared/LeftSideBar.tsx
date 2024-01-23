@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import { useUserContext } from "@/context/userContext";
-
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 
 import { sidebarLinks } from "@/constants";
@@ -16,12 +15,14 @@ const LeftSideBar = () => {
 
   useEffect(() => {
     if (isSuccess) navigate(0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   const { pathname } = useLocation();
   const { user } = useUserContext();
+
   return (
-    <nav className='leftsidebar'>
+    <nav className={`leftsidebar`}>
       <div className='flex flex-col gap-11'>
         <Link to={"/"} className='flex gap-3 items-center'>
           <img
@@ -36,9 +37,9 @@ const LeftSideBar = () => {
           <img
             src={user.imageUrl || "/assets/images/profile-placeholder.svg"}
             alt='profile'
-            width={170}
-            height={36}
-            className='h-14 w-14 rounded-full'
+            width={50}
+            height={50}
+            className='rounded-full object-cover'
           />
           <div className='flex flex-col'>
             <p className='body-bold'>{user.name}</p>

@@ -4,6 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
+  useGetUserById,
+  useUpdateUser,
+} from "@/lib/react-query/queriesAndMutations";
+
+import { ProfileValidation } from "@/lib/validation";
+import {
   Form,
   FormControl,
   FormField,
@@ -12,12 +18,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-
-import { ProfileValidation } from "@/lib/validation";
-import {
-  useGetUserById,
-  useUpdateUser,
-} from "@/lib/react-query/queriesAndMutations";
 import Loader from "@/components/shared/Loader";
 import ProfileUploader from "@/components/shared/ProfileUploader";
 import { Input } from "@/components/ui/input";
@@ -41,7 +41,6 @@ const UpdateProfile = () => {
     },
   });
 
-  // Queries
   const { data: currentUser } = useGetUserById(id || "");
   const { mutateAsync: updateUser, isPending: isLoadingUpdate } =
     useUpdateUser();
@@ -53,7 +52,6 @@ const UpdateProfile = () => {
       </div>
     );
 
-  // Handler
   const handleUpdate = async (value: z.infer<typeof ProfileValidation>) => {
     const updatedUser = await updateUser({
       userId: currentUser.$id,

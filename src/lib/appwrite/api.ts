@@ -246,11 +246,9 @@ export function getFilePreview(fileId: string) {
   try {
     const fileUrl = storage.getFilePreview(
       appwriteConfig.storageId,
-      fileId
-      // 2000,
-      // 2000,
-      // "top",
-      // 100
+      fileId,
+      2000,
+      2000
     );
 
     if (!fileUrl) throw Error;
@@ -318,7 +316,7 @@ export async function savePost(userId: string, postId: string) {
     );
 
     if (!updatedPost) throw Error;
-
+    console.log("updatedPost", updatedPost);
     return updatedPost;
   } catch (error) {
     console.log(error);
@@ -498,6 +496,23 @@ export async function searchPosts(searchTerm: string) {
     if (!posts) throw Error;
 
     return posts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//Follow
+export async function follow(currentUserId: string, followUserId: string) {
+  try {
+    const updatedFollow = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.followCollectionId,
+      ID.unique(),
+      { users: currentUserId, follows: followUserId }
+    );
+
+    if (!updatedFollow) throw Error;
+    return updatedFollow;
   } catch (error) {
     console.log(error);
   }

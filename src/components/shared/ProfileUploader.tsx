@@ -18,6 +18,7 @@ const ProfileUploader = ({ fieldChange, mediaUrl }: ProfileUploaderProps) => {
       fieldChange(acceptedFiles);
       setFileUrl(convertFileToUrl(acceptedFiles[0]));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [file]
   );
 
@@ -36,8 +37,11 @@ const ProfileUploader = ({ fieldChange, mediaUrl }: ProfileUploaderProps) => {
         <img
           src={fileUrl || "/assets/icons/profile-placeholder.svg"}
           alt='image'
-          className='h-24 w-24 rounded-full object-cover object-top'
+          width={100}
+          height={100}
+          className='object-cover rounded-full w-24 h-24'
         />
+
         <p className='text-primary-500 small-regular md:bbase-semibold'>
           Change profile photo
         </p>

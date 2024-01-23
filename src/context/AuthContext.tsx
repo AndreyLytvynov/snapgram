@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { IContextType, IUser } from "@/types";
+import Loader from "@/components/shared/Loader";
 
 const INITIAL_USER = {
   id: "",
@@ -26,7 +27,7 @@ export const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser>(INITIAL_USER);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const checkAuthUser = async () => {
     try {
       const currentAccount = await getCurrentUser();
+      console.log(currentAccount);
       if (currentAccount) {
         setUser({
           id: currentAccount.$id,
@@ -64,6 +66,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     )
       navigate("/sign-in");
     checkAuthUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const value = {
@@ -75,7 +78,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     checkAuthUser,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {isLoading ? <Loader /> : children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
