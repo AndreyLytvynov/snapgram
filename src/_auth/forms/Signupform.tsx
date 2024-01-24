@@ -26,13 +26,12 @@ import { SignupValidation } from "@/lib/validation";
 
 const Signupform = () => {
   const { toast } = useToast();
-  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const { checkAuthUser } = useUserContext();
   const navigate = useNavigate();
 
   const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
     useCreateUserAccount();
-  const { mutateAsync: signInAccount, isPending: isSigninIn } =
-    useSignInAccount();
+  const { mutateAsync: signInAccount } = useSignInAccount();
 
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
@@ -96,7 +95,7 @@ const Signupform = () => {
                 <FormControl>
                   <Input type='text' className='shad-input' {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='shad-form_message' />
               </FormItem>
             )}
           />
@@ -109,7 +108,7 @@ const Signupform = () => {
                 <FormControl>
                   <Input type='text' className='shad-input' {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='shad-form_message' />
               </FormItem>
             )}
           />
@@ -122,7 +121,7 @@ const Signupform = () => {
                 <FormControl>
                   <Input type='email' className='shad-input' {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='shad-form_message' />
               </FormItem>
             )}
           />
@@ -135,7 +134,7 @@ const Signupform = () => {
                 <FormControl>
                   <Input type='password' className='shad-input' {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className='shad-form_message' />
               </FormItem>
             )}
           />

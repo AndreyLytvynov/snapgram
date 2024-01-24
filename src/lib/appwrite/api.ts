@@ -316,7 +316,6 @@ export async function savePost(userId: string, postId: string) {
     );
 
     if (!updatedPost) throw Error;
-    console.log("updatedPost", updatedPost);
     return updatedPost;
   } catch (error) {
     console.log(error);
@@ -463,7 +462,7 @@ export async function getInfinitePosts({
 }: {
   pageParam: string | null;
 }) {
-  const queries = [Query.orderDesc("$updatedAt"), Query.limit(9)];
+  const queries = [Query.orderDesc("$updatedAt"), Query.limit(6)];
 
   if (pageParam) {
     queries.push(Query.cursorAfter(pageParam.toString()));
@@ -496,23 +495,6 @@ export async function searchPosts(searchTerm: string) {
     if (!posts) throw Error;
 
     return posts;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-//Follow
-export async function follow(currentUserId: string, followUserId: string) {
-  try {
-    const updatedFollow = await databases.createDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.followCollectionId,
-      ID.unique(),
-      { users: currentUserId, follows: followUserId }
-    );
-
-    if (!updatedFollow) throw Error;
-    return updatedFollow;
   } catch (error) {
     console.log(error);
   }

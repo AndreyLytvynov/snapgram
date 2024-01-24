@@ -12,7 +12,6 @@ import {
   useSearchPosts,
 } from "@/lib/react-query/queriesAndMutations";
 
-
 const Explore = () => {
   const { ref, inView } = useInView();
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();

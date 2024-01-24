@@ -35,7 +35,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const checkAuthUser = async () => {
     try {
       const currentAccount = await getCurrentUser();
-      console.log(currentAccount);
       if (currentAccount) {
         setUser({
           id: currentAccount.$id,
@@ -46,7 +45,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
-
         return true;
       }
 
@@ -80,7 +78,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {isLoading ? <Loader /> : children}
+      {isLoading ? (
+        <div className='mt-36'>
+          <Loader />
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 };
