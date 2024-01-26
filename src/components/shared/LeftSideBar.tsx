@@ -15,7 +15,7 @@ const LeftSideBar = () => {
 
   useEffect(() => {
     if (isSuccess) navigate(0);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   const { pathname } = useLocation();
@@ -46,7 +46,7 @@ const LeftSideBar = () => {
             <p className='small-regular text-light-3'>@{user.name}</p>
           </div>
         </Link>
-        <ul className='flex flex-col gap-6'>
+        <ul className='flex flex-col gap-3'>
           {sidebarLinks.map((link: INavLink) => {
             const isActive = pathname === link.route;
             return (

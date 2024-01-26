@@ -16,6 +16,7 @@ const PostDetails = lazy(() => import("./_root/pages/PostDetails"));
 const Profile = lazy(() => import("./_root/pages/Profile"));
 const Saved = lazy(() => import("./_root/pages/Saved"));
 const UpdateProfile = lazy(() => import("./_root/pages/UpdateProfile"));
+const Followers = lazy(() => import("./_root/pages/Followers"));
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path='/posts/:id' element={<PostDetails />} />
             <Route path='/profile/:id/' element={<Profile />} />
             <Route path='/update-profile/:id' element={<UpdateProfile />} />
+            <Route path='/following' element={<Followers />} />
           </Route>
           <Route path='*' element={<Navigate to={"/"} replace />} />
         </Routes>

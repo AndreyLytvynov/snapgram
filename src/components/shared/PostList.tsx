@@ -17,11 +17,13 @@ const PostList = ({
   showStats = true,
 }: GridPostListProps) => {
   const { user } = useUserContext();
-  //grid-container
   return (
     <ul className='grid-container'>
       {posts.map((post) => (
-        <li key={post.$id} className='relative min-w-70 min-h-70'>
+        <li
+          key={post.$id}
+          className='relative min-w-70 min-h-70 hover:scale-[1.01] duration-200'
+        >
           <Link to={`/posts/${post.$id}`} className='grid-post_link'>
             <img
               src={post.imageUrl}

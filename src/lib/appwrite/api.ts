@@ -499,3 +499,47 @@ export async function searchPosts(searchTerm: string) {
     console.log(error);
   }
 }
+
+//Follow
+
+export async function createFollower(followerId: string, recipientId: string) {
+  try {
+    const newFollower = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.followsCollectionId,
+      ID.unique(),
+      {
+        creators: followerId,
+        following: recipientId,
+      }
+    );
+    return newFollower;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteFollower(followerId: string, recipientId: string) {
+  try {
+    const existingFollower = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.followsCollectionId,
+      [
+        Query.equal("creators", followerId),
+        Query.equal("following", recipientId),
+      ]
+    );
+
+    if (existingFollower.documents.length === 0) throw Error;
+
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.followsCollectionId,
+      existingFollower.documents[0].$id
+    );
+
+    return existingFollower.documents[0];
+  } catch (error) {
+    console.log(error);
+  }
+}

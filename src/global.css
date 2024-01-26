@@ -178,7 +178,7 @@
   }
 
   .profile-tab {
-    @apply flex gap-2 p-4 w-1/2 bg-dark-2 data-[state=active]:bg-dark-3;
+    @apply flex gap-2 p-4 w-1/2 bg-dark-2 data-[state=active]:bg-dark-3 hover:bg-dark-4;
   }
 
   /* Saved */
@@ -242,7 +242,7 @@
 
   /* User card */
   .user-card {
-    @apply flex-center flex-col gap-4 border border-dark-4 rounded-[20px] px-5 py-8;
+    @apply flex-center flex-col gap-4 border border-dark-4 hover:bg-dark-3 rounded-[20px] px-5 py-8;
   }
 }
 
@@ -266,7 +266,7 @@
 
   /* Button */
   .shad-button_primary {
-    @apply bg-primary-500 hover:bg-primary-500 text-light-1 flex gap-2 !important;
+    @apply bg-primary-500 hover:bg-primary-600 text-light-1 flex gap-2 !important;
   }
 
   .shad-button_dark_4 {

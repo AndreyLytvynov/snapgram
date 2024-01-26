@@ -8,8 +8,10 @@ import {
 import {
   SignInAccount,
   SignOutAccount,
+  createFollower,
   createPost,
   createUserAccount,
+  deleteFollower,
   deletePost,
   deleteSavedPost,
   getCurrentUser,
@@ -247,5 +249,41 @@ export const useGetUserPosts = (userId?: string) => {
     queryKey: [QUERY_KEYS.GET_USER_POSTS, userId],
     queryFn: () => getUserPosts(userId),
     enabled: !!userId,
+  });
+};
+
+export const useCreateFollower = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      followerId,
+      recipientId,
+    }: {
+      followerId: string;
+      recipientId: string;
+    }) => createFollower(followerId, recipientId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+      });
+    },
+  });
+};
+
+export const useDeleteFollower = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      followerId,
+      recipientId,
+    }: {
+      followerId: string;
+      recipientId: string;
+    }) => deleteFollower(followerId, recipientId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+      });
+    },
   });
 };

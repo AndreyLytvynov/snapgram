@@ -1,3 +1,5 @@
+import { Models } from "appwrite";
+
 export type IContextType = {
   user: IUser;
   isLoading: boolean;
@@ -52,6 +54,8 @@ export type IUser = {
   email: string;
   imageUrl: string;
   bio: string;
+  follower: Models.Document[];
+  follows: Models.Document[];
 };
 
 export type INewUser = {
