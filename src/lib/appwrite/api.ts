@@ -484,6 +484,33 @@ export async function getInfinitePosts({
   }
 }
 
+export async function getRecentInfinitePosts({
+  pageParam,
+}: {
+  pageParam: string | null;
+}) {
+  const queries = [Query.orderDesc("$createdAt"), Query.limit(6)];
+
+  if (pageParam) {
+    queries.push(Query.cursorAfter(pageParam.toString()));
+  }
+
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      queries
+    );
+
+    if (!posts) throw Error;
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function searchPosts(searchTerm: string) {
   try {
     const posts = await databases.listDocuments(
